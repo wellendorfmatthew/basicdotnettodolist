@@ -1,0 +1,26 @@
+﻿@model IEnumerable<dotnettodolist.Models.Todos>
+
+@{
+    ViewData["Title"] = "Todos";
+}
+
+<div class="flex items-center flex-col gap-10">
+    <h1 class="text-5xl text-white font-semibold">Todo List</h1>
+    <div class="w-[350px] flex flex-col gap-1">
+        @foreach(var item in Model)
+        {
+            <div class="w-full h-[80px] flex items-center bg-blue-900 justify-between border-white border-2">
+                <input id="todo-@item.Id" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 ml-4">
+                <p class="text-xl text-white font-semibold">@item.Todo</p>
+                <form asp-action="DeleteTodo" asp-route-itemid="@item.Id" method="post">
+                    <input type="hidden" asp-for="@item.Id" />
+                    <button type="submit" value="DeleteTodo" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 font-semibold text-xl bg-red-600 w-[30px] h-[30px] mr-4">X</button>
+                </form>
+            </div>
+        }
+    </div>
+    <form asp-action="CreateTodo" method="post" class="flex items-center flex-col gap-10">
+        <input type="text" name="todo" class="bg-blue-900 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add a todo" />
+        <button type="submit" class="px-5 py-3 text-base font-medium text-center text-black bg-white rounded-lg hover:bg-gray-100">Submit</button>
+    </form>
+</div>
